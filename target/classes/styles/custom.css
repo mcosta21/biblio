@@ -1,0 +1,32 @@
+
+
+.root {
+ }
+
+.header {
+    -fx-background-color: linear-gradient(to top, #e5e5e5, #f8f8f8)
+}
+
+.main-button {
+    -fx-font: 24px 'Roboto';
+    -fx-cursor: hand;
+    -fx-fill-transition: 4s;
+    -fx-pref-height: 270px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-wrap-text : true;
+    -fx-alignment: center;
+    -fx-border-color: #b5b5b5;
+    -fx-border-width: 1;
+    -fx-background-color: linear-gradient(to top, #dadada, #eeeeee);
+}
+
+.main-button:hover {
+    -fx-background-color: linear-gradient(to top, #e5e5e5, #f8f8f8)
+}
+
+.main-button Text {
+    -fx-alignment: center;
+}
+
+
