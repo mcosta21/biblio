@@ -4,7 +4,7 @@ public class Teacher extends Reader {
 
     private String discipline;
 
-    private static final Integer LIMITEDEVOLUCAO= 30;
+    public static final Integer RETURN_LIMIT = 30;
 
     public Teacher(){}
 

@@ -71,4 +71,9 @@ public class Reader {
     public int hashCode() {
         return Objects.hash(cpf);
     }
+
+    @Override
+    public String toString() {
+        return cpf + " - " + name;
+    }
 }

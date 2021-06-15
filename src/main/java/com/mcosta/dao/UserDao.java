@@ -79,7 +79,6 @@ public class UserDao extends Dao implements Persistence<User> {
     public User findById(Long id) throws Exception {
         String sql = "Select * from public.user where id = ?";
         PreparedStatement ps = getPreparedStatement(false, sql);
-
         ResultSet rs = ps.executeQuery();
 
         if (rs.next()) {
@@ -96,4 +95,25 @@ public class UserDao extends Dao implements Persistence<User> {
         }
     }
 
+    public User findUserByUsernameAndPassword(String username, String password) throws Exception {
+        String sql = "Select * from public.user u where u.username = ? and u.password = ?";
+        PreparedStatement ps = getPreparedStatement(false, sql);
+        ps.setString(1, username);
+        ps.setString(2, password);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getLong("id"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setName(rs.getString("name"));
+            user.setUserType(UserTypeEnum.valueOf(rs.getString("user_type")));
+            return user;
+        }
+        else {
+            return null;
+        }
+    }
 }

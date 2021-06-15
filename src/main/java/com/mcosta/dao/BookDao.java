@@ -234,65 +234,102 @@ public class BookDao extends Dao implements Persistence<Book> {
         }
     }
 
-    public CopyBook buscarExemplar(Long codigo) throws Exception{
-        /*
-        String sql = "select livro.isbn, livro.nome as nomelivro, editora.codigo, editora.nome as nomeeditora "
-                    + " from livro inner join editora on livro.editora_codigo = editora.codigo "
-                    + " inner join exemplar on exemplar.livro_isbn = livro.isbn where exemplar.codigo = ?";
+    public CopyBook findCopyBookById(Long copyBookId) throws Exception{
+        String sql = "select book.isbn, book.name as book_name, book.year, publisher.id, publisher.name as "
+                + "publisher_name from book inner join publisher on book.publisher_id = publisher.id "
+                + "inner join copybook on copybook.book_isbn = book.isbn "
+                + "where copybook.id = ?";
+
         PreparedStatement ps = getPreparedStatement(false, sql);
-        ps.setLong(1, codigo);
+        ps.setLong(1, copyBookId);
         ResultSet rs = ps.executeQuery();
         
-        CopyBook resultado = null;
+        CopyBook result = null;
 
         if (rs.next()) {
             Book book = new Book();
             book.setIsbn(rs.getString("isbn"));
-            book.setNome(rs.getString("nomelivro"));
-            
-            Publisher publisher = new Publisher();
-            publisher.setId(rs.getLong("codigo"));
-            publisher.setName(rs.getString("nomeeditora"));
-            book.setEditora(publisher);
+            book.setName(rs.getString("book_name"));
+            book.setYear(rs.getInt("year"));
 
-            sql = "select autor.* from livroautor inner join autor on livroautor.autor_codigo = autor.codigo "
-                + " where livroautor.livro_isbn = ?";
+            Publisher publisher = new Publisher();
+            publisher.setId(rs.getLong("id"));
+            publisher.setName(rs.getString("publisher_name"));
+            book.setPublisher(publisher);
+
+            sql = "select author.* from book_author inner join author on book_author.author_id = author.id "
+                    + " where book_author.book_isbn = ?";
+
             PreparedStatement ps2 = getPreparedStatement(false, sql);
             ps2.setString(1, book.getIsbn());
             ResultSet rs2 = ps2.executeQuery();
 
             while (rs2.next()) {
-                Autor autor = new Autor();
-                autor.setCodigo(rs2.getLong("codigo"));
-                autor.setNacionalidade(rs2.getString("nacionalidade"));
-                autor.setNome(rs2.getString("nome"));
+                Author author = new Author();
+                author.setId(rs2.getLong("id"));
+                author.setNationality(rs2.getString("nationality"));
+                author.setName(rs2.getString("name"));
 
-                book.adicionarAutor(autor);
+                book.addAuthor(author);
             }
 
-
-            sql = "select * from exemplar where livro_isbn = ?";
+            sql = "select * from copybook where book_isbn = ?";
             PreparedStatement ps3 = getPreparedStatement(false, sql);
             ps3.setString(1, book.getIsbn());
             ResultSet rs3 = ps3.executeQuery();
 
-            
             while (rs3.next()) {
                 CopyBook copyBook = new CopyBook();
-                copyBook.setCodigo(rs3.getLong("codigo"));
+                copyBook.setId(rs3.getLong("id"));
                 copyBook.setStatus(Status.valueOf(rs3.getString("status")));
-                book.adicionarExemplar(copyBook);
-                if (copyBook.getCodigo().equals(codigo)) {
-                    resultado = copyBook;
+                Date dateAcquisition = rs3.getDate("date_acquisition");
+                if(dateAcquisition != null){
+                    copyBook.setDateAcquisition(dateAcquisition.toLocalDate());
+                }
+                book.addCopy(copyBook);
+                if (copyBook.getId().equals(copyBookId)) {
+                    result = copyBook;
                 }
             }
 
-            
         }
 
-        return resultado;
-        */
-        return null;
+        return result;
     }
 
+    public List<CopyBook> findCopiesBookAvailableByIsbn(String isbn) throws Exception {
+        String sql = "select * from copybook where status = 'AVAILABLE' and book_isbn = ?";
+        PreparedStatement ps = getPreparedStatement(false, sql);
+        ps.setString(1, isbn);
+        ResultSet rs = ps.executeQuery();
+
+        sql = "select * from book where book.isbn = ?";
+
+        PreparedStatement ps2 = getPreparedStatement(false, sql);
+        ps2.setString(1, isbn);
+        ResultSet rs2 = ps2.executeQuery();
+
+        Book book = new Book();
+        if(rs2.next()){
+            book.setIsbn(rs2.getString("isbn"));
+            book.setName(rs2.getString("name"));
+            book.setYear(rs2.getInt("year"));
+        }
+
+        List<CopyBook> copies = new ArrayList<CopyBook>();
+
+        while (rs.next()) {
+            CopyBook copyBook = new CopyBook();
+            copyBook.setId(rs.getLong("id"));
+            copyBook.setStatus(Status.valueOf(rs.getString("status")));
+            Date dateAcquisition = rs.getDate("date_acquisition");
+            if(dateAcquisition != null){
+                copyBook.setDateAcquisition(dateAcquisition.toLocalDate());
+            }
+            copyBook.setBook(book);
+            copies.add(copyBook);
+        }
+
+        return copies;
+    }
 }

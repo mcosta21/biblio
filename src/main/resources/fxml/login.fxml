@@ -6,15 +6,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #1d1e26;" stylesheets="@../styles/custom.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mcosta.controller.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="768.0" prefWidth="1366.0" style="-: #1d1e26;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mcosta.gui.LoginController">
    <children>
-      <Pane layoutX="400.0" layoutY="135.0" prefHeight="499.0" prefWidth="567.0" style="-fx-background-color: #282a36;">
+      <Pane layoutX="400.0" layoutY="106.0" prefHeight="499.0" prefWidth="567.0">
          <children>
-            <ImageView fitHeight="30.0" fitWidth="122.0" layoutX="222.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../ManutAir.png" />
-               </image>
-            </ImageView>
             <Button layoutX="43.0" layoutY="390.0" mnemonicParsing="false" onAction="#onClickLogin" prefHeight="48.0" prefWidth="494.0" text="Entrar" />
             <VBox layoutX="36.0" layoutY="127.0" prefHeight="98.0" prefWidth="494.0">
                <children>
@@ -29,9 +24,6 @@
                </children>
             </VBox>
          </children>
-         <effect>
-            <DropShadow color="#00000071" height="184.08" radius="91.54" width="184.08" />
-         </effect>
       </Pane>
    </children>
 </AnchorPane>

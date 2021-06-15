@@ -34,8 +34,7 @@ public class MainController extends AccessProviderController implements Initiali
 
     private void generateOptionPages(){
 
-        // AccessProvider.getUser().getUserType()
-        List<Page> pages = AccessProvider.getPagesByUserType(UserTypeEnum.ADMIN);
+        List<Page> pages = AccessProvider.getPagesByUserType(AccessProvider.getUser().getUserType());
 
         HBox hboxController = new HBox();
         hboxController.setSpacing(10);

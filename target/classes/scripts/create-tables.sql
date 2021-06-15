@@ -117,3 +117,23 @@ CREATE TABLE public.copybook
         ON DELETE NO ACTION
         NOT VALID
 );
+
+CREATE TABLE public.loan_book
+(
+    id serial NOT NULL,
+    date_loan date NOT NULL,
+    date_return date,
+    copybook_id integer NOT NULL,
+    reader_cpf character varying NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (copybook_id)
+        REFERENCES public.copybook (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    FOREIGN KEY (reader_cpf)
+        REFERENCES public.reader (cpf) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public abstract class AccessProvider {
     
-    private static User user = new User(1L, "marcio", "123", "marcio", UserTypeEnum.ADMIN);;
+    private static User user;
 
     public static List<Page> getPagesByUserType(UserTypeEnum userType) {
         switch(userType) {
@@ -27,16 +27,20 @@ public abstract class AccessProvider {
 
     private static List<Page> pagesForAttendant(){
         List<Page> pages = new ArrayList<Page>();
+        pages.add(new Page("reader", "Cadastrar Leitor"));
+        pages.add(new Page("loan-book", "Fazer empréstimo"));
+        pages.add(new Page("return-book", "Devolver livro"));
         return pages;
     }
 
     private static List<Page> pagesForLibrarian(){
         List<Page> pages = new ArrayList<Page>();
-        pages.add(new Page("user", "Usuário"));
-        pages.add(new Page("author", "Autor"));
-        pages.add(new Page("reader", "Leitor"));
-        pages.add(new Page("publisher", "Editora"));
-        pages.add(new Page("book", "Livro"));
+        pages.add(new Page("user", "Cadastrar usuário"));
+        pages.add(new Page("author", "Cadastrar autor"));
+        pages.add(new Page("publisher", "Cadastrar editora"));
+        pages.add(new Page("book", "Cadastrar livro"));
+        pages.add(new Page("list-overdue-readers", "Listar leitores em atraso"));
+
         return pages;
     }
 

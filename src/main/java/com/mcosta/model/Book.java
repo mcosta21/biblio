@@ -98,4 +98,8 @@ public class Book {
         authors.remove(author);
     }
 
+    @Override
+    public String toString() {
+        return isbn + " - " + name + " " + getPublisherName() + " " + year ;
+    }
 }

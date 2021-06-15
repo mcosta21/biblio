@@ -3,7 +3,7 @@ package com.mcosta.model;
 public class Student extends Reader {
     private String registration;
 
-    private static final Integer LIMITEDEVOLUCAO= 15;
+    public static final Integer RETURN_LIMIT= 15;
 
     public Student(){}
 
