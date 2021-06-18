@@ -4,7 +4,7 @@ import com.mcosta.dao.ReaderDao;
 import com.mcosta.model.Reader;
 import com.mcosta.model.Student;
 import com.mcosta.model.Teacher;
-import com.mcosta.util.ValidatorCPF;
+import com.mcosta.util.ValidatorCpf;
 
 public class ReaderValidator {
 
@@ -37,8 +37,8 @@ public class ReaderValidator {
             throw new Exception("CPF não informado.");
         }
 
-        if(ValidatorCPF.isNotValid(reader.getCpf())){
-            throw new Exception("CPF inválido");
+        if(ValidatorCpf.isNotValid(reader.getCpf())){
+            throw new Exception("CPF inválido.");
         }
 
         if (reader.getName() == null || reader.getName().isEmpty()) {
@@ -50,6 +50,5 @@ public class ReaderValidator {
             throw new Exception("CPF já utilizado.");
         }
     }
-
 
 }

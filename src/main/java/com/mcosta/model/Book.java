@@ -71,6 +71,15 @@ public class Book {
         return this.publisher.getName();
     }
 
+    public Book(){}
+
+    public Book(String isbn, String name, int year, Publisher publisher) {
+        this.isbn = isbn;
+        this.name = name;
+        this.year = year;
+        this.publisher = publisher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,7 +1,6 @@
 package com.mcosta.validator;
 
 import com.mcosta.dao.BookDao;
-import com.mcosta.dao.Persistence;
 import com.mcosta.model.Book;
 import com.mcosta.util.DateConverter;
 

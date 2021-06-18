@@ -1,6 +1,6 @@
 package com.mcosta.util;
 
-public class ValidatorCPF {
+public class ValidatorCpf {
 	
 	public static boolean isValid(String cpf) { return validating(cpf) != null; }
 
