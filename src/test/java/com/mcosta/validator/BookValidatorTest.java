@@ -1,10 +1,6 @@
 package com.mcosta.validator;
 
-import com.mcosta.dao.BookDao;
-import com.mcosta.model.Author;
 import com.mcosta.model.Book;
-import com.mcosta.model.CopyBook;
-import com.mcosta.model.Publisher;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

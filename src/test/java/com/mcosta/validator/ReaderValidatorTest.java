@@ -1,7 +1,5 @@
 package com.mcosta.validator;
 
-import com.mcosta.model.Publisher;
-import com.mcosta.model.Reader;
 import com.mcosta.model.Student;
 import com.mcosta.model.Teacher;
 import org.junit.jupiter.api.Test;

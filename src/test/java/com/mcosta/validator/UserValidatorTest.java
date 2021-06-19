@@ -1,6 +1,5 @@
 package com.mcosta.validator;
 
-import com.mcosta.model.Publisher;
 import com.mcosta.model.User;
 import org.junit.jupiter.api.Test;
 
