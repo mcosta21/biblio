@@ -1,8 +1,11 @@
 package com.mcosta.gui;
 
+import com.mcosta.dao.BookDao;
 import com.mcosta.dao.LoanBookDao;
 import com.mcosta.dao.Persistence;
+import com.mcosta.model.CopyBook;
 import com.mcosta.model.LoanBook;
+import com.mcosta.model.Status;
 import com.mcosta.util.MessageAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +47,7 @@ public class ReturnBookController extends AccessProviderController implements In
     private LoanBook loanBook;
 
     private Persistence<LoanBook> loanDao = new LoanBookDao();
+    private BookDao bookDao = new BookDao();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -71,6 +75,11 @@ public class ReturnBookController extends AccessProviderController implements In
 
             loanBook.setDateReturn(dateReturn);
             loanDao.update(loanBook);
+
+            CopyBook copyBook = loanBook.getCopyBook();
+            copyBook.setStatus(Status.AVAILABLE);
+            bookDao.updateCopyBookStatus(copyBook);
+
             clear();
             new MessageAlert("Sucesso", "Devolução realizada com sucesso.", Alert.AlertType.INFORMATION).sendMessageAlert();
             updateTable();

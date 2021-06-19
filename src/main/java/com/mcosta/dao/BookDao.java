@@ -3,6 +3,7 @@ package com.mcosta.dao;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -331,5 +332,13 @@ public class BookDao extends Dao implements Persistence<Book> {
         }
 
         return copies;
+    }
+
+    public void updateCopyBookStatus(CopyBook object) throws Exception {
+        String sql = "update copybook set status = ? where id = ?";
+        PreparedStatement ps = getPreparedStatement(false, sql);
+        ps.setString(1, object.getStatus().toString());
+        ps.setLong(2, object.getId());
+        ps.executeUpdate();
     }
 }

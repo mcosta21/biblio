@@ -15,7 +15,7 @@ public class ReaderValidator {
     }
 
     public void isValid(Teacher teacher, boolean isCreating) throws Exception {
-        isValidReader(teacher);
+        isValidReader(teacher, isCreating);
         if (teacher.getDiscipline() == null || teacher.getDiscipline().isEmpty()) {
             throw new Exception("Disciplina não informada.");
         }
@@ -26,13 +26,17 @@ public class ReaderValidator {
     }
 
     public void isValid(Student student, boolean isCreating) throws Exception {
-        isValidReader(student);
+        isValidReader(student, isCreating);
         if (student.getRegistration() == null || student.getRegistration().isEmpty()) {
             throw new Exception("Matrícula não informada.");
         }
     }
 
     private void isValidReader(Reader reader) throws Exception {
+        isValidReader(reader, true);
+    }
+
+    private void isValidReader(Reader reader, boolean isCreating) throws Exception {
         if (reader.getCpf() == null || reader.getCpf().isEmpty()) {
             throw new Exception("CPF não informado.");
         }
@@ -46,8 +50,15 @@ public class ReaderValidator {
         }
 
         Reader r = readerDao.findByCpf(reader.getCpf());
-        if(r != null){
-            throw new Exception("CPF já utilizado.");
+        if(isCreating){
+            if(r != null){
+                throw new Exception("CPF já utilizado.");
+            }
+        }
+        else {
+            if(r != null && !reader.getCpf().equals(r.getCpf())){
+                throw new Exception("CPF já utilizado.");
+            }
         }
     }
 

@@ -16,7 +16,7 @@ public class UserValidatorTest {
 
         // When
         Throwable exception = assertThrows(Exception.class, () -> {
-            UserValidator.isValid(user);
+            new UserValidator().isValid(user);
         });
 
         // Then
@@ -31,7 +31,7 @@ public class UserValidatorTest {
 
         // When
         Throwable exception = assertThrows(Exception.class, () -> {
-            UserValidator.isValid(user);
+            new UserValidator().isValid(user);
         });
 
         // Then
@@ -47,7 +47,7 @@ public class UserValidatorTest {
 
         // When
         Throwable exception = assertThrows(Exception.class, () -> {
-            UserValidator.isValid(user);
+            new UserValidator().isValid(user);
         });
 
         // Then
@@ -64,7 +64,7 @@ public class UserValidatorTest {
 
         // When
         Throwable exception = assertThrows(Exception.class, () -> {
-            UserValidator.isValid(user);
+            new UserValidator().isValid(user);
         });
 
         // Then

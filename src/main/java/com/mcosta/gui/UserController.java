@@ -69,7 +69,7 @@ public class UserController extends AccessProviderController implements Initiali
         try {
             if(isCreating) {
                 user = new User(username, password, name, userType);
-                UserValidator.isValid(user);
+                new UserValidator().isValid(user);
                 userDao.save(user);
                 new MessageAlert("Sucesso", "Usuário cadastrado com sucesso.", Alert.AlertType.INFORMATION).sendMessageAlert();
                 clear();
@@ -79,7 +79,7 @@ public class UserController extends AccessProviderController implements Initiali
                 user.setPassword(password);
                 user.setName(name);
                 user.setUserType(userType);
-                UserValidator.isValid(user);
+                new UserValidator().isValid(user);
                 userDao.update(user);
                 new MessageAlert("Sucesso", "Usuário atualizado com sucesso.", Alert.AlertType.INFORMATION).sendMessageAlert();
             }
@@ -119,7 +119,6 @@ public class UserController extends AccessProviderController implements Initiali
             titleForm.setText(user.getId().toString());
             buttonDelete.setDisable(false);
         }
-
     }
 
     private void clear(){

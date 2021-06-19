@@ -159,7 +159,7 @@ public class ReaderController extends AccessProviderController implements Initia
     public void handleRowSelect(MouseEvent event) {
         if(event.getClickCount() == 2){
             reader = (Reader) tableView.getSelectionModel().getSelectedItem();
-            inputCpf.setEditable(false);
+            inputCpf.setDisable(true);
             inputCpf.setText(reader.getCpf());
             inputName.setText(reader.getName());
             inputAddress.setText(reader.getAddress());
@@ -188,6 +188,7 @@ public class ReaderController extends AccessProviderController implements Initia
         isCreating = true;
         reader = null;
         buttonDelete.setDisable(true);
+        inputCpf.setDisable(false);
         inputCpf.setText("");
         inputAddress.setText("");
         inputName.setText("");

@@ -116,4 +116,25 @@ public class UserDao extends Dao implements Persistence<User> {
             return null;
         }
     }
+
+    public User findByUsername(String username) throws Exception {
+        String sql = "Select * from public.user u where u.username = ?";
+        PreparedStatement ps = getPreparedStatement(false, sql);
+        ps.setString(1, username);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            User user = new User();
+            user.setId(rs.getLong("id"));
+            user.setUsername(rs.getString("username"));
+            user.setPassword(rs.getString("password"));
+            user.setName(rs.getString("name"));
+            user.setUserType(UserTypeEnum.valueOf(rs.getString("user_type")));
+            return user;
+        }
+        else {
+            return null;
+        }
+    }
 }

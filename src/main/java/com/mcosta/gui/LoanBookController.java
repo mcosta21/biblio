@@ -48,6 +48,7 @@ public class LoanBookController extends AccessProviderController implements Init
     private LoanBook loanBook;
 
     private Persistence<LoanBook> loanDao = new LoanBookDao();
+    private BookDao bookDao = new BookDao();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,15 +79,27 @@ public class LoanBookController extends AccessProviderController implements Init
                 LoanBookValidator.isValid(loanBook, book);
                 copyBook.setBook(book);
                 loanDao.save(loanBook);
+                copyBook.setStatus(Status.BORROWED);
+                bookDao.updateCopyBookStatus(copyBook);
+
                 new MessageAlert("Sucesso", "Empréstimo realizado com sucesso.",
                         Alert.AlertType.INFORMATION).sendMessageAlert();
                 clear();
             }
             else {
+                CopyBook oldCopyBook = loanBook.getCopyBook();
                 loanBook.setReader(reader);
                 loanBook.setCopyBook(copyBook);
                 LoanBookValidator.isValid(loanBook, book);
                 loanDao.update(loanBook);
+
+                if(!copyBook.getId().equals(oldCopyBook.getId())){
+                    oldCopyBook.setStatus(Status.AVAILABLE);
+                    copyBook.setStatus(Status.BORROWED);
+                    bookDao.updateCopyBookStatus(oldCopyBook);
+                    bookDao.updateCopyBookStatus(copyBook);
+                }
+
                 new MessageAlert("Sucesso", "Empréstimo atualizado com sucesso.", Alert.AlertType.INFORMATION).sendMessageAlert();
             }
             updateTable();
@@ -142,7 +155,7 @@ public class LoanBookController extends AccessProviderController implements Init
         buttonDelete.setDisable(true);
         inputReader.getSelectionModel().clearSelection();
         inputBook.getSelectionModel().clearSelection();
-        inputCopyBook.getSelectionModel().clearSelection();
+        inputCopyBook.getSelectionModel().select(null);
         titleForm.setText("Novo");
     }
 
@@ -177,6 +190,7 @@ public class LoanBookController extends AccessProviderController implements Init
             ObservableList<CopyBook> obs =
                     FXCollections.observableArrayList(copies);
             inputCopyBook.setItems(obs);
+            inputCopyBook.getSelectionModel().select(null);
         }
         catch (Exception e){
             new MessageAlert("Erro", e.getMessage()).sendMessageAlert();

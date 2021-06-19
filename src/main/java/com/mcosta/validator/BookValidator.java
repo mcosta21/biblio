@@ -34,6 +34,10 @@ public class BookValidator {
             throw new Exception("Editora não informada.");
         }
 
+        if (book.getCopies().size() == 0) {
+            throw new Exception("Nenhum exemplar informado informado.");
+        }
+
         Book b = bookDao.findByIsbn(book.getIsbn());
         if(b != null && isCreating){
             throw new Exception("ISBN já utilizado.");
