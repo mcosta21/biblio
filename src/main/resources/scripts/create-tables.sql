@@ -15,6 +15,8 @@ CREATE TABLE IF NOT EXISTS "user"
     CONSTRAINT user_pkey PRIMARY KEY (id)
 )
 
+INSERT INTO public.user (username, password, name, user_type) values ('admin', '123456', 'Admin', 'ADMIN')
+
 CREATE SEQUENCE author_id_seq
     INCREMENT 1
     START 1
